@@ -4,8 +4,6 @@ CMD ["/usr/sbin/init"]
 
 LABEL maintainer "Long Xiao Zhong"
 
-RUN systemctl status
-
 # Configure Repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
 #RUN curl -o ./sjtug_mirror.repo -sSL "https://raw.githubusercontent.com/Longxiaozhong/learn_netbase/master/sjtug_mirror.repo"
@@ -21,7 +19,7 @@ RUN yum repolist
 RUN yum -y update
 
 # Install packages | Stop Firewall | Enable MariaDB and httpd
-RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl start httpd; systemctl start mariadb 
+RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl enable httpd; systemctl enable mariadb 
 
 # Change mysql cred
 RUN mysqladmin -u root password 'mysqlpassword'
@@ -43,7 +41,7 @@ RUN cd ./xinhu/ && \
 # Import Tables to MariaDB
 RUN cd /var/www/html/ && \
 	mysql -u root -pmysqlpassword rockxinhu < ./webmain/install/rockxinhu.sql && \
-	rm -rf ./webmian/install; systemctl restart httpd
+	rm -rf ./webmian/install
 
 # Change permission
 RUN chown apache /var/www/html/webmain/
