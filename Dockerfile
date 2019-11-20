@@ -41,8 +41,8 @@ RUN yum -y update
 RUN yum -y install mariadb-server mariadb php httpd sudo 
 # Enable MariaDB and httpd
 #RUN systemctl start httpd 
-/etc/init.d/httpd start
-/etc/init.d/mariadb start
+RUN /etc/init.d/httpd start
+RUN /etc/init.d/mariadb start
 #RUN systemctl start mariadb 
 
 
@@ -71,7 +71,7 @@ RUN cd /var/www/html/ && \
 	
 # Restart Services
 #RUN systemctl restart httpd
-/etc/init.d/httpd restart
+RUN /etc/init.d/httpd restart
 
 
 # Change permission
