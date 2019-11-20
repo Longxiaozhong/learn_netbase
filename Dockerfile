@@ -5,7 +5,7 @@ LABEL maintainer "Long Xiao Zhong"
 # Configure Repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
 RUN yum -y install wget
-RUN wget "https://raw.githubusercontent.com/Longxiaozhong/learn_netbase/master/sjtug_mirror.repo"
+RUN curl -o ./sjtug_mirror.repo -sSL "https://raw.githubusercontent.com/Longxiaozhong/learn_netbase/master/sjtug_mirror.repo"
 RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
