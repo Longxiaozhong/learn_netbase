@@ -2,9 +2,7 @@ FROM local/c7-systemd
 
 LABEL maintainer "Long Xiao Zhong"
 
-USER root
 WORKDIR /
-
 
 ENV container docker
 
@@ -16,33 +14,18 @@ RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
-
-# Install packages
-RUN yum -y install mariadb-server mariadb php httpd sudo 
-
-# Stop Firewall
-RUN systemctl disable firewalld --now
-
-# Disable SELinux
-#RUN setenforce 0
-
 # update packages
 RUN yum clean all
 RUN yum makecache
 RUN yum repolist
 RUN yum -y update
 
-
-
-# Enable MariaDB and httpd
-RUN systemctl start httpd 
-RUN systemctl start mariadb 
-
+# Install packages | Stop Firewall | Enable MariaDB and httpd
+RUN yum -y install mariadb-server mariadb php httpd sudo; systemctl disable firewalld --now; systemctl start httpd; systemctl start mariadb 
 
 # Change mysql cred
 RUN mysqladmin -u root password 'mysqlpassword'
 RUN mysql -uroot -pmysqlpassword -e "CREATE DATABASE rockxinhu"
-
 
 # Download Software
 RUN yum -y install git
@@ -60,12 +43,7 @@ RUN cd ./xinhu/ && \
 # Import Tables to MariaDB
 RUN cd /var/www/html/ && \
 	mysql -u root -pmysqlpassword rockxinhu < ./webmain/install/rockxinhu.sql && \
-	rm -rf ./webmian/install
-	
-# Restart Services
-RUN systemctl restart httpd
-#RUN /etc/init.d/httpd restart
-
+	rm -rf ./webmian/install; systemctl restart httpd
 
 # Change permission
 RUN chown apache /var/www/html/webmain/
