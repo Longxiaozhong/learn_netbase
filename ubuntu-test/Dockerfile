@@ -5,7 +5,7 @@ LABEL maintainer "Long Xiao Zhong"
 # Configure Repo
 #RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
 #RUN curl -o ./sjtug_mirror.repo -sSL "https://raw.githubusercontent.com/Longxiaozhong/learn_netbase/master/sjtug_mirror.repo"
-COPY  ./sjtug_mirror.repo  ./
+#COPY  ./sjtug_mirror.repo  ./
 #RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 #RUN cat /etc/yum.repos.d/CentOS-Base.repo
 #RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
@@ -19,6 +19,8 @@ COPY  ./sjtug_mirror.repo  ./
 # Install packages | Stop Firewall | Enable MariaDB and httpd
 #RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl enable httpd; systemctl enable mariadb 
 RUN apt-get -y update; apt-get -y install mariadb php httpd php-mysql
+RUN /etc/init.d/httpd start
+RUN /etc/init.d/mariadb start
 
 # Change mysql cred
 #RUN mysqladmin -u root password 'mysqlpassword'
