@@ -18,6 +18,7 @@ LABEL maintainer "Long Xiao Zhong"
 
 # Install packages | Stop Firewall | Enable MariaDB and httpd
 #RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl enable httpd; systemctl enable mariadb 
+RUN apt-get search mariadb
 RUN apt-get -y update; apt-get -y install mariadb php httpd php-mysql
 RUN /etc/init.d/httpd start
 RUN /etc/init.d/mariadb start
