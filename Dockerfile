@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM centos:6
 
 LABEL maintainer "Long Xiao Zhong"
 
