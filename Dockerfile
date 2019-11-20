@@ -8,6 +8,9 @@ WORKDIR /
 
 ENV container docker
 
+VOLUME [ "/sys/fs/cgroup" ]
+CMD ["/usr/sbin/init"]
+
 
 # Configure Repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
