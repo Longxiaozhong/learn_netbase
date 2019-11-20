@@ -29,8 +29,8 @@ RUN yum -y update
 # Install packages
 RUN yum -y install mariadb-server mariadb php httpd 
 # Enable MariaDB
-RUN systemctl enable httpd --now
-RUN systemctl enable mariadb --now
+RUN systemctl start httpd 
+RUN systemctl start mariadb 
 
 
 # Change mysql cred
