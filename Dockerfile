@@ -11,13 +11,14 @@ RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
 #RUN curl -o ./sjtug_mirror.repo -sSL "https://raw.githubusercontent.com/Longxiaozhong/learn_netbase/master/sjtug_mirror.repo"
 COPY  ./sjtug_mirror.repo  ./
 RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
+RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
 # Stop Firewall
 # RUN systemctl disable firewalld --now
 
 # Disable SELinux
-RUN setenforce 0
+#RUN setenforce 0
 
 # update packages
 RUN yum clean all
