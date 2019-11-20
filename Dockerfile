@@ -2,11 +2,14 @@ FROM centos:7
 
 LABEL maintainer "Long Xiao Zhong"
 
+WORKDIR /
+
 RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
 
 # Configure Repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
-RUN curl -o ./sjtug_mirror.repo -sSL "https://raw.githubusercontent.com/Longxiaozhong/learn_netbase/master/sjtug_mirror.repo"
+#RUN curl -o ./sjtug_mirror.repo -sSL "https://raw.githubusercontent.com/Longxiaozhong/learn_netbase/master/sjtug_mirror.repo"
+COPY  ./sjtug_mirror.repo  ./
 RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
@@ -34,8 +37,10 @@ RUN mysql -uroot -pmysqlpassword -e "CREATE DATABASE rockxinhu"
 
 # Download Software
 RUN yum -y install git
-RUN git clone "https://github.com/rainrocka/xinhu.git"
-RUN cd xinhu/ && \
+#RUN git clone "https://github.com/rainrocka/xinhu.git"
+RUN mkdir ./xinhu
+COPY  ./xinhu  ./xinhu
+RUN cd ./xinhu/ && \
 	cp -R * /var/www/html/ && \
 	cd /var/www/html/ && \
 	sed -i "s/'randkey'	=> ''/'randkey'=>'dswchjbmulkeoxizqafngprvty'/g"    ./webmain/webmainConfig.php1 && \
