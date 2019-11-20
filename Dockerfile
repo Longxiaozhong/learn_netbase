@@ -21,6 +21,8 @@ RUN yum -y update
 # Install packages | Stop Firewall | Enable MariaDB and httpd
 RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl enable httpd; systemctl enable mariadb 
 
+RUN find / -name "*mysqld_safe*"
+
 # Change mysql cred
 RUN mysqladmin -u root password 'mysqlpassword'
 RUN mysql -uroot -pmysqlpassword -e "CREATE DATABASE rockxinhu"
@@ -47,4 +49,4 @@ RUN cd /var/www/html/ && \
 RUN chown apache /var/www/html/webmain/
 
 EXPOSE 80 443 1688 3306 
-
+CMD ["/usr/sbin/init"]
