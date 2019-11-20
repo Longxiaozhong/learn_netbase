@@ -28,11 +28,13 @@ RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 # Install packages
 RUN yum -y install mariadb-server mariadb php httpd sudo 
 
+
+
 #Install systemd:
 #RUN yum -y install systemd; yum clean all;
 
 # Stop Firewall
-RUN systemctl disable firewalld --now
+RUN sudo systemctl disable firewalld --now
 
 # Disable SELinux
 #RUN setenforce 0
