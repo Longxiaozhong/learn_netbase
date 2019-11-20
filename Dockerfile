@@ -40,7 +40,7 @@ rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install packages
-RUN yum -y install mariadb-server mariadb php httpd 
+RUN yum -y install mariadb-server mariadb php httpd sudo 
 # Enable MariaDB
 RUN sudo systemctl start httpd 
 RUN sudo systemctl start mariadb 
