@@ -9,10 +9,10 @@ RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
 # Stop Firewall
-systemctl disable firewalld --now
+RUN systemctl disable firewalld --now
 
 # Disable SELinux
-setenforce 0
+RUN setenforce 0
 
 # update packages
 RUN yum clean all
@@ -50,7 +50,7 @@ RUN cd /var/www/html/ && \
 RUN systemctl restart httpd
 
 # Change permission
-chown apache /var/www/html/webmain/
+RUN chown apache /var/www/html/webmain/
 
 EXPOSE 80 443 3306
 
