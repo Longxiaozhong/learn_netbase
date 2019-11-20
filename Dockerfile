@@ -23,6 +23,7 @@ RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl en
 
 # Start MySQL
 RUN mysqld_safe --skip-grant-tables &
+RUN find / -name "*mysql.sock*"
 
 # Change mysql cred
 RUN mysqladmin -u root password 'mysqlpassword'
