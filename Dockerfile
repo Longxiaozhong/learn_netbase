@@ -24,7 +24,7 @@ RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 RUN yum -y install systemd; yum clean all;
 
 # Stop Firewall
-RUN systemctl disable firewalld --now
+#RUN systemctl disable firewalld --now
 
 # Disable SELinux
 #RUN setenforce 0
@@ -39,9 +39,11 @@ RUN yum -y update
 
 # Install packages
 RUN yum -y install mariadb-server mariadb php httpd sudo 
-# Enable MariaDB
-RUN systemctl start httpd 
-RUN systemctl start mariadb 
+# Enable MariaDB and httpd
+#RUN systemctl start httpd 
+/etc/init.d/httpd start
+/etc/init.d/mariadb start
+#RUN systemctl start mariadb 
 
 
 # Change mysql cred
@@ -68,7 +70,9 @@ RUN cd /var/www/html/ && \
 	rm -rf ./webmian/install
 	
 # Restart Services
-RUN systemctl restart httpd
+#RUN systemctl restart httpd
+/etc/init.d/httpd restart
+
 
 # Change permission
 RUN chown apache /var/www/html/webmain/
