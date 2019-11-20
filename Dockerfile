@@ -2,9 +2,7 @@ FROM local/c7-systemd
 
 LABEL maintainer "Long Xiao Zhong"
 
-WORKDIR /
-
-ENV container docker
+RUN systemctl status
 
 # Configure Repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
