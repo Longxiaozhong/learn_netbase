@@ -34,7 +34,7 @@ RUN yum -y install mariadb-server mariadb php httpd sudo
 #RUN yum -y install systemd; yum clean all;
 
 # Stop Firewall
-RUN sudo systemctl disable firewalld --now
+RUN sudo /usr/bin/systemctl disable firewalld --now
 
 # Disable SELinux
 #RUN setenforce 0
