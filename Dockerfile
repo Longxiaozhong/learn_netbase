@@ -1,16 +1,12 @@
-FROM centos:7
+FROM centos:centos7
 
 LABEL maintainer "Long Xiao Zhong"
-
-
 
 USER root
 WORKDIR /
 
 
 ENV container docker
-
-
 
 
 # Configure Repo
@@ -22,7 +18,6 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
 #Install systemd:
-RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
 RUN yum -y install systemd; yum clean all;
 # Enable Systemd
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
