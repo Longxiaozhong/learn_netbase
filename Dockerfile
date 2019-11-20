@@ -28,7 +28,7 @@ RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 #RUN yum -y install systemd; yum clean all;
 
 # Stop Firewall
-#RUN systemctl disable firewalld --now
+RUN systemctl disable firewalld --now
 
 # Disable SELinux
 #RUN setenforce 0
