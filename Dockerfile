@@ -12,8 +12,8 @@ VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 
 # Use Systemctl
-RUN curl -o ./systemctl.py -sSL https://raw.githubusercontent.com/gdraheim/docker-systemctl-images/master/files/docker/systemctl.py
-RUN mv ./systemctl.py    /usr/bin/systemctl
+#RUN curl -o ./systemctl.py -sSL https://raw.githubusercontent.com/gdraheim/docker-systemctl-images/master/files/docker/systemctl.py
+#RUN mv ./systemctl.py    /usr/bin/systemctl
 
 
 # Configure Repo
