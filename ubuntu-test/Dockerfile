@@ -25,6 +25,7 @@ RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main 
 #RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl enable httpd; systemctl enable mariadb 
 RUN apt search mysql
 RUN apt-get -y update
+RUN apt-get -y install ca-certificates
 RUN apt-get -y install mariadb php httpd php-mysql
 RUN /etc/init.d/httpd start
 RUN /etc/init.d/mariadb start
