@@ -22,7 +22,7 @@ RUN yum -y update
 RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl enable httpd; systemctl enable mariadb 
 
 # Start MySQL
-RUN mysqld_safe --skip-grant-tables
+RUN mysqld_safe --skip-grant-tables &
 
 # Change mysql cred
 RUN mysqladmin -u root password 'mysqlpassword'
