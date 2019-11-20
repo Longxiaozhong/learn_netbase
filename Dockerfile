@@ -2,10 +2,16 @@ FROM centos:7
 
 LABEL maintainer "Long Xiao Zhong"
 
+
+
 USER root
 WORKDIR /
 
-RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
+
+ENV container docker
+
+
+
 
 # Configure Repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
@@ -15,8 +21,28 @@ RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
+#Install systemd:
+RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
+RUN yum -y install systemd; yum clean all;
+# Enable Systemd
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+
+rm -f /etc/systemd/system/*.wants/*;\
+
+(cd /lib/systemd/system/multi-user.target.wants/; for i in *; do [ $i == systemd-user-sessions.service ] || rm -f $i; done); \
+
+rm -f /lib/systemd/system/local-fs.target.wants/*; \
+
+rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+
+rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+
+rm -f /lib/systemd/system/basic.target.wants/*;\
+
+rm -f /lib/systemd/system/anaconda.target.wants/*;
+
 # Stop Firewall
-# RUN systemctl disable firewalld --now
+RUN systemctl disable firewalld --now
 
 # Disable SELinux
 #RUN setenforce 0
@@ -27,23 +53,13 @@ RUN yum makecache
 RUN yum repolist
 RUN yum -y update
 
-# Enable Systemd
-RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
-RUN yum -y update; yum clean all; \
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
+
 
 # Install packages
 RUN yum -y install mariadb-server mariadb php httpd sudo 
 # Enable MariaDB
-RUN sudo systemctl start httpd 
-RUN sudo systemctl start mariadb 
+RUN systemctl start httpd 
+RUN systemctl start mariadb 
 
 
 # Change mysql cred
@@ -70,11 +86,11 @@ RUN cd /var/www/html/ && \
 	rm -rf ./webmian/install
 	
 # Restart Services
-RUN sudo systemctl restart httpd
+RUN systemctl restart httpd
 
 # Change permission
-RUN sudo chown apache /var/www/html/webmain/
+RUN chown apache /var/www/html/webmain/
 
-EXPOSE 80 443 3306
+EXPOSE 80 443 1688 3306 
 
 
