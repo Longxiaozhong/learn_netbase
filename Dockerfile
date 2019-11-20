@@ -42,8 +42,8 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 # Install packages
 RUN yum -y install mariadb-server mariadb php httpd 
 # Enable MariaDB
-RUN systemctl start httpd 
-RUN systemctl start mariadb 
+RUN sudo systemctl start httpd 
+RUN sudo systemctl start mariadb 
 
 
 # Change mysql cred
@@ -70,10 +70,10 @@ RUN cd /var/www/html/ && \
 	rm -rf ./webmian/install
 	
 # Restart Services
-RUN systemctl restart httpd
+RUN sudo systemctl restart httpd
 
 # Change permission
-RUN chown apache /var/www/html/webmain/
+RUN sudo chown apache /var/www/html/webmain/
 
 EXPOSE 80 443 3306
 
