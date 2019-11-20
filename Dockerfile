@@ -24,6 +24,10 @@ RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
+
+# Install packages
+RUN yum -y install mariadb-server mariadb php httpd sudo 
+
 #Install systemd:
 #RUN yum -y install systemd; yum clean all;
 
@@ -41,8 +45,6 @@ RUN yum -y update
 
 
 
-# Install packages
-RUN yum -y install mariadb-server mariadb php httpd sudo 
 # Enable MariaDB and httpd
 #RUN systemctl start httpd 
 RUN /etc/init.d/httpd start
