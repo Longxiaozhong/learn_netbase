@@ -9,6 +9,10 @@ LABEL maintainer "Long Xiao Zhong"
 #RUN mv ./sjtug_mirror.repo /etc/yum.repos.d/CentOS-Base.repo
 #RUN cat /etc/yum.repos.d/CentOS-Base.repo
 #RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse" >> /etc/apt/source.list
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse"  >> /etc/apt/source.list
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse" >> /etc/apt/source.list
+RUN echo "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse" >> /etc/apt/source.list
 
 # update packages
 #RUN yum clean all
