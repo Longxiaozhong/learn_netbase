@@ -2,6 +2,7 @@ FROM centos:7
 
 LABEL maintainer "Long Xiao Zhong"
 
+USER root
 WORKDIR /
 
 RUN yum -y swap -- remove fakesystemd -- install systemd systemd-libs
