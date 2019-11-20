@@ -1,4 +1,6 @@
 FROM local/c7-systemd
+CMD ["/usr/sbin/init"]
+
 
 LABEL maintainer "Long Xiao Zhong"
 
@@ -47,5 +49,4 @@ RUN cd /var/www/html/ && \
 RUN chown apache /var/www/html/webmain/
 
 EXPOSE 80 443 1688 3306 
-CMD ["/usr/sbin/init"]
 
