@@ -1,4 +1,4 @@
-FROM centos:6
+FROM centos:7
 
 LABEL maintainer "Long Xiao Zhong"
 
@@ -11,6 +11,10 @@ ENV container docker
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 
+# Use Systemctl
+RUN curl -o ./systemctl.py -sSL https://raw.githubusercontent.com/gdraheim/docker-systemctl-images/master/files/docker/systemctl.py
+RUN mv ./systemctl.py    /usr/bin/systemctl
+
 
 # Configure Repo
 RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak 
@@ -21,7 +25,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i "s/gpgcheck=1/gpgcheck=0/g" /etc/yum.conf
 
 #Install systemd:
-RUN yum -y install systemd; yum clean all;
+#RUN yum -y install systemd; yum clean all;
 
 # Stop Firewall
 #RUN systemctl disable firewalld --now
