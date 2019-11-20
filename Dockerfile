@@ -32,15 +32,15 @@ RUN cd ./xinhu/ && \
 	cp -R * /var/www/html/
 	
 #RUN cd /var/www/html/ && \
-	sed -i "s/'randkey'	=> ''/'randkey'=>'dswchjbmulkeoxizqafngprvty'/g"    ./webmain/webmainConfig.php1 && \
-	sed -i "s/'db_pass'	=> ''/'db_pass'	=> 'mysqlpassword'/g"    ./webmain/webmainConfig.php1  && \
-	mv ./webmain/webmainConfig.php1 ./webmain/webmainConfig.php 
+#	sed -i "s/'randkey'	=> ''/'randkey'=>'dswchjbmulkeoxizqafngprvty'/g"    ./webmain/webmainConfig.php1 && \
+#	sed -i "s/'db_pass'	=> ''/'db_pass'	=> 'mysqlpassword'/g"    ./webmain/webmainConfig.php1  && \
+#	mv ./webmain/webmainConfig.php1 ./webmain/webmainConfig.php 
 	
 
 # Import Tables to MariaDB
 #RUN cd /var/www/html/ && \
-	mysql -u root -pmysqlpassword rockxinhu < ./webmain/install/rockxinhu.sql && \
-	rm -rf ./webmian/install
+#	mysql -u root -pmysqlpassword rockxinhu < ./webmain/install/rockxinhu.sql && \
+#	rm -rf ./webmian/install
 
 # Change permission
 RUN chown apache /var/www/html/webmain/
