@@ -21,29 +21,24 @@ RUN yum -y update
 # Install packages | Stop Firewall | Enable MariaDB and httpd
 RUN yum -y install mariadb-server mariadb php httpd php-mysql sudo; systemctl enable httpd; systemctl enable mariadb 
 
-# Start MySQL
-RUN mysqld_safe --skip-grant-tables &
-RUN find / -name "*mysql.sock*"
-
 # Change mysql cred
-RUN mysqladmin -u root password 'mysqlpassword'
-RUN mysql -uroot -pmysqlpassword -e "CREATE DATABASE rockxinhu"
+#RUN mysqladmin -u root password 'mysqlpassword'
+#RUN mysql -uroot -pmysqlpassword -e "CREATE DATABASE rockxinhu"
 
-# Download Software
-RUN yum -y install git
-#RUN git clone "https://github.com/rainrocka/xinhu.git"
+# Software
 RUN mkdir ./xinhu
 COPY  ./xinhu  ./xinhu
 RUN cd ./xinhu/ && \
-	cp -R * /var/www/html/ && \
-	cd /var/www/html/ && \
+	cp -R * /var/www/html/
+	
+#RUN cd /var/www/html/ && \
 	sed -i "s/'randkey'	=> ''/'randkey'=>'dswchjbmulkeoxizqafngprvty'/g"    ./webmain/webmainConfig.php1 && \
 	sed -i "s/'db_pass'	=> ''/'db_pass'	=> 'mysqlpassword'/g"    ./webmain/webmainConfig.php1  && \
 	mv ./webmain/webmainConfig.php1 ./webmain/webmainConfig.php 
 	
 
 # Import Tables to MariaDB
-RUN cd /var/www/html/ && \
+#RUN cd /var/www/html/ && \
 	mysql -u root -pmysqlpassword rockxinhu < ./webmain/install/rockxinhu.sql && \
 	rm -rf ./webmian/install
 
